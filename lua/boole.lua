@@ -224,6 +224,8 @@ M.run = function(direction)
       return vim.cmd(':normal!')
     end
   end
+
+  return 0
 end
 
 M.setup = function(options)
