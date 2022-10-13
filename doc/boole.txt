@@ -1,0 +1,65 @@
+ *boole.txt*  A Neovim plugin for toggling booleans, etc.
+
+==============================================================================
+CONTENTS                                          *boole-contents*
+
+    1. Introduction ......................... |boole-introduction|
+    2. Install .............................. |boole-install|
+    3. Commands ............................. |boole-commands|
+    4. Configuration ........................ |boole-config|
+
+==============================================================================
+1. INTRODUCTION                               *boole-introduction*
+
+Boole is a simple Neovim plugin that extends the default increment and
+decrement functionality of CTRL-A and CTRL-X to allow for toggling
+boolean values like "on", "yes", and "true" as well as cycling through:
+
+* Days of the week and their abbreviations (e.g., `Monday` → `Tuesday`)
+* Months of the year and their abbreviations (e.g., `Jan` → `Feb`)
+* X11 / Web color names (e.g., `Orange` → `OrangeRed`)
+* Canonical hours (e.g., `Compline` → `Vigil`)
+
+==============================================================================
+2. INSTALL                                                     *boole-install*
+
+Using Packer: >
+    use({
+      'https://github.com/nat-418/boole.nvim',
+      config = function()
+	require('boole').setup()
+      end
+    })
+
+==============================================================================
+3. COMMANDS                                                   *boole-commands*
+
+:Boole {increment|decrement}                                           *Boole*
+
+Toggle or cycle up or down.
+
+==============================================================================
+4. CONFIGURATION                                                 *boole-config*
+
+Boole can be mapped to a key by passing a configuration table to the 
+`setup` function. You can also add any paris of words you would like.
+Feel free to submit an issue and pull request with additions you
+think would make good defaults.
+
+Here is an example: >                             *my_awesome_plugin.setup()*
+  require('boole').setup({
+    mappings = {
+      increment = '<C-a>',
+      decrement = '<C-x>'
+    },
+    -- Key value pairs of additional replacements
+    -- increment: (key => value)
+    -- decrement: (value => key)
+    pair_additions = {
+      ['Foo'] = 'Bar',
+      ['Bar'] = 'Foo'
+    },
+  })
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
