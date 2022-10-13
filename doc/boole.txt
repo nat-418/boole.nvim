@@ -46,7 +46,7 @@ Boole can be mapped to a key by passing a configuration table to the
 Feel free to submit an issue and pull request with additions you
 think would make good defaults.
 
-Here is an example: >                             *my_awesome_plugin.setup()*
+Here is an example: >                             *boole.setup()*
   require('boole').setup({
     mappings = {
       increment = '<C-a>',
