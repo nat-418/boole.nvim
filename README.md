@@ -44,8 +44,8 @@ require('boole').setup({
   -- increment: (key => value)
   -- decrement: (value => key)
   pair_additions = {
-    ["False"] = "True",
-    ["True"] = "False"
+    ['Foo'] = 'Bar',
+    ['Bar'] = 'Foo'
   },
 })
 ```
