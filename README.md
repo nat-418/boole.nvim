@@ -5,8 +5,14 @@ boole.nvim
 
 Boole is a simple Neovim plugin that extends the default increment and
 decrement functionality of CTRL-A and CTRL-X to allow for toggling
-boolean values as well as cycling through days of the week, months
-of the year, and ROYGBIV color names. This plugin ships one command:
+boolean values like "on", "yes", and "true" as well as cycling through:
+
+* Days of the week and their abbreviations (e.g., `Monday` → `Tuesday`)
+* Months of the year and their abbreviations (e.g., `Jan` → `Feb`)
+* X11 / Web color names (e.g., `Orange` → `OrangeRed`)
+* Canonical hours (e.g., `Compline` → `Vigil`)
+
+This plugin ships one command:
 
 * `:Boole {increment|decrement}`
 
