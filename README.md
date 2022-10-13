@@ -34,7 +34,7 @@ Boole can be mapped to a key by passing a configuration table to the
 
 ```lua
 require('boole').setup({
-  mapping = {
+  mappings = {
     increment = '<C-a>',
     decrement = '<C-x>'
   }
