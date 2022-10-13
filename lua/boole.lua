@@ -130,6 +130,12 @@ M.setup = function(options)
 
     if options == nil then return 1 end
 
+    if options.pair_additions ~= nil then
+        for key,val in pairs(options.pair_additions) do
+            generate_hashmaps(key, val)
+        end
+    end
+
     if options.mappings.increment ~= nil then
         vim.keymap.set(
             { 'n', 'v' },
