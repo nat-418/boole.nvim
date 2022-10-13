@@ -5,7 +5,7 @@ boole.nvim
 
 Boole is a simple Neovim plugin that extends the default increment and
 decrement functionality of CTRL-A and CTRL-X to allow for toggling
-boolean values like "on", "yes", and "true" as well as cycling through:
+boolean values like `on`, `yes`, and `true` as well as cycling through:
 
 * Days of the week and their abbreviations (e.g., `Monday` → `Tuesday`)
 * Months of the year and their abbreviations (e.g., `Jan` → `Feb`)
