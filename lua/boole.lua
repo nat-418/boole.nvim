@@ -1,13 +1,13 @@
 local M = {}
 
-M.replace_map = {
+local replace_map = {
     increment = {},
     decrement = {},
 }
 
 local generate_hashmaps = function(from, to)
-    M.replace_map.increment[from] = to
-    M.replace_map.decrement[to] = from
+    replace_map.increment[from] = to
+    replace_map.decrement[to] = from
 end
 
 -- Proper booleans
@@ -98,8 +98,8 @@ generate_hashmaps('Violet', 'Red')
 M.run = function(direction)
     local under_cursor = vim.fn.expand('<cword>')
 
-    local match = direction == 'decrement' and M.replace_map.decrement[under_cursor] or
-        M.replace_map.increment[under_cursor]
+    local match = direction == 'decrement' and replace_map.decrement[under_cursor] or
+        replace_map.increment[under_cursor]
 
     if match ~= nil then
         return vim.cmd(':normal ciw' .. match)
