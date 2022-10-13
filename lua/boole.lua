@@ -25,6 +25,17 @@ generate_hashmaps('No',    'Yes')
 generate_hashmaps('On',    'Off')
 generate_hashmaps('Off',   'On')
 
+-- Canonical hours
+generate_hashmaps('Matins',   'Lauds')
+generate_hashmaps('Lauds',    'Prime')
+generate_hashmaps('Prime',    'Terce')
+generate_hashmaps('Terce',    'Sext')
+generate_hashmaps('Sext',     'Nones')
+generate_hashmaps('Nones',    'Vespers')
+generate_hashmaps('Vespers',  'Compline')
+generate_hashmaps('Compline', 'Vigil')
+generate_hashmaps('Vigil',    'Matins')
+
 -- Days of the week
 generate_hashmaps('monday',    'tuesday')
 generate_hashmaps('tuesday',   'wednesday')
