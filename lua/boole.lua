@@ -307,8 +307,6 @@ end
 
 -- Logical operators
 generate_hashmaps('and', 'or')
-generate_hashmaps('&&',  '||')
-generate_hashmaps('==',  '!=')
 
 M.setup = function(options)
     vim.api.nvim_create_user_command(
