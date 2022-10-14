@@ -279,6 +279,8 @@ end
 M.run = function(direction)
     local under_cursor = vim.fn.expand('<cword>')
 
+    print(under_cursor)
+
     local match = direction == 'decrement'
                   and replace_map.decrement[under_cursor]
                   or replace_map.increment[under_cursor]
@@ -304,8 +306,9 @@ M.run = function(direction)
 end
 
 -- Logical operators
-generate_hashmaps('&&', '||')
-generate_hashmaps('==', '!=')
+generate_hashmaps('and', 'or')
+generate_hashmaps('&&',  '||')
+generate_hashmaps('==',  '!=')
 
 M.setup = function(options)
     vim.api.nvim_create_user_command(
