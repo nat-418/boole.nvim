@@ -281,8 +281,8 @@ M.run = function(direction)
 
     print(under_cursor)
 
-    local match = direction == 'decrement'
-                  and replace_map.decrement[under_cursor]
+    local match = (direction == 'decrement'
+                   and replace_map.decrement[under_cursor])
                   or replace_map.increment[under_cursor]
 
     if match ~= nil then
