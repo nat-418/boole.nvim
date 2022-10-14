@@ -276,13 +276,19 @@ for _, letter in ipairs(letters) do
   generate_hashmaps(letter .. 0, letter .. 1)
 end
 
-M.run = function(direction)
-    if direction == nil then return 0 end
+-- Logical operators
+generate_hashmaps('and', 'or')
+generate_hashmaps('or',  'and')
+-- TODO: figure out how to match these with something since they
+--       do not work with <cword>.
+-- generate_hashmaps('&&', '||')
+-- generate_hashmaps('||,  '&&')
+-- generate_hashmaps('==', '!=')
+-- generate_hashmaps('!=', '==')
 
+M.run = function(direction)
     local under_cursor = vim.fn.expand('<cword>')
     local match        = replace_map[direction][under_cursor]
-
-    print(under_cursor)
 
     if match ~= nil then
         return vim.cmd(':normal ciw' .. match)
@@ -303,9 +309,6 @@ M.run = function(direction)
 
     return 0
 end
-
--- Logical operators
-generate_hashmaps('and', 'or')
 
 M.setup = function(options)
     vim.api.nvim_create_user_command(
