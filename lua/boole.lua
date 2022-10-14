@@ -7,7 +7,27 @@ local replace_map = {
 
 local generate_hashmaps = function(from, to)
     replace_map.increment[from] = to
-    replace_map.decrement[to] = from
+    replace_map.decrement[to]   = from
+end
+
+local letters = {
+  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+}
+
+for _, letter in ipairs(letters) do
+  generate_hashmaps(letter .. 1, letter .. 2)
+  generate_hashmaps(letter .. 2, letter .. 3)
+  generate_hashmaps(letter .. 3, letter .. 4)
+  generate_hashmaps(letter .. 4, letter .. 5)
+  generate_hashmaps(letter .. 5, letter .. 6)
+  generate_hashmaps(letter .. 6, letter .. 7)
+  generate_hashmaps(letter .. 7, letter .. 8)
+  generate_hashmaps(letter .. 8, letter .. 9)
+  generate_hashmaps(letter .. 9, letter .. 0)
+  generate_hashmaps(letter .. 0, letter .. 1)
 end
 
 -- Proper booleans
