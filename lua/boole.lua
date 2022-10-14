@@ -277,13 +277,12 @@ for _, letter in ipairs(letters) do
 end
 
 M.run = function(direction)
+    if direction == nil then return 0 end
+
     local under_cursor = vim.fn.expand('<cword>')
+    local match        = replace_map[direction][under_cursor]
 
     print(under_cursor)
-
-    local match = (direction == 'decrement'
-                   and replace_map.decrement[under_cursor])
-                  or replace_map.increment[under_cursor]
 
     if match ~= nil then
         return vim.cmd(':normal ciw' .. match)
