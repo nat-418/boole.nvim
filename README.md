@@ -12,6 +12,7 @@ boolean values like `on`, `yes`, and `true` as well as cycling through:
 * X11 / Web color names (e.g., `Orange` → `OrangeRed`)
 * Canonical hours (e.g., `Compline` → `Vigil`)
 * Letter + number "words" (e.g., `F1` → `F2`)
+* Logical operators (e.g., `and` → `or`)
 
 This plugin ships one command:
 
