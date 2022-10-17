@@ -282,24 +282,13 @@ M.run = function(direction)
                   and replace_map.decrement[under_cursor]
                   or replace_map.increment[under_cursor]
 
-    if match ~= nil then
-        return vim.cmd(':normal ciw' .. match)
-    end
+    if match ~= nil then return vim.cmd(':normal ciw' .. match) end
 
     -- <C-a> and <C-x> compatability
-    if direction == 'increment' then
-        if type(tonumber(under_cursor)) == 'number' then
-            return vim.cmd(':normal!')
-        end
-    end
+    if direction == 'increment' then return vim.cmd(':normal!') end
+    if direction == 'decrement' then return vim.cmd(':normal!') end
 
-    if direction == 'decrement' then
-        if type(tonumber(under_cursor)) == 'number' then
-            return vim.cmd(':normal!')
-        end
-    end
-
-    return 0
+    return false
 end
 
 M.setup = function(options)
@@ -312,7 +301,7 @@ M.setup = function(options)
         }
     )
 
-    if options == nil then return 1 end
+    if options == nil then return false end
 
     if options.pair_additions ~= nil then
         for key,val in pairs(options.pair_additions) do
@@ -336,7 +325,7 @@ M.setup = function(options)
         )
     end
 
-    return 1
+    return true
 end
 
 return M
