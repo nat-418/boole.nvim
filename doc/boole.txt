@@ -42,7 +42,7 @@ Toggle or cycle up or down.
 4. CONFIGURATION                                                 *boole-config*
 
 Boole can be mapped to a key by passing a configuration table to the 
-`setup` function. You can also add any paris of words you would like.
+`setup` function. You can also add any cycle of words you would like.
 Feel free to submit an issue and pull request with additions you
 think would make good defaults.
 
@@ -52,12 +52,10 @@ Here is an example: >                             *boole.setup()*
       increment = '<C-a>',
       decrement = '<C-x>'
     },
-    -- Key value pairs of additional replacements
-    -- increment: (key => value)
-    -- decrement: (value => key)
-    pair_additions = {
-      ['Foo'] = 'Bar',
-      ['Bar'] = 'Foo'
+    -- User defined loops
+    additions = {
+      {'Foo', 'Bar'}
+      {'tic', 'tac', 'toe'}
     },
   })
 
