@@ -37,7 +37,7 @@ Configuration
 -------------
 
 Boole can be mapped to a key by passing a configuration table to the 
-`setup` function. You can also add any paris of words you would like.
+`setup` function. You can also add any cycle of words you would like.
 Feel free to submit an issue and pull request with additions you
 think would make good defaults.
 
