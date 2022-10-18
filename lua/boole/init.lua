@@ -7,20 +7,22 @@ local replace_map = {
     decrement = {},
 }
 
-local generate = function(loop_list)
+local generate = function(loop_list, capitalize)
+    local do_capitalize = capitalize or false
     for i = 1, #loop_list do
         local current = loop_list[i]
         local next = loop_list[i + 1] or loop_list[1]
 
-        local capitalized_current = utils.capitalize(current)
-        local capitalized_next = utils.capitalize(next)
-
         replace_map.increment[current] = next
         replace_map.decrement[next] = current
 
-        replace_map.increment[capitalized_current] = capitalized_next
-        replace_map.decrement[capitalized_next] = capitalized_current
+        if do_capitalize then
+            local capitalized_current = utils.capitalize(current)
+            local capitalized_next = utils.capitalize(next)
 
+            replace_map.increment[capitalized_current] = capitalized_next
+            replace_map.decrement[capitalized_next] = capitalized_current
+        end
     end
 end
 
@@ -42,14 +44,15 @@ for _, letter in ipairs(letters) do
             letter .. 7,
             letter .. 8,
             letter .. 9
-        }
+        },
+        true
     )
 end
 
 -- Booleans {{{
-generate({ 'true', 'false' })
-generate({ 'yes', 'no' })
-generate({ 'on', 'off' })
+generate({ 'true', 'false' }, true)
+generate({ 'yes', 'no' }, true)
+generate({ 'on', 'off' }, true)
 -- }}}
 
 -- Canonical hours {{{
@@ -78,7 +81,8 @@ generate(
         'friday',
         'saturday',
         'sunday'
-    }
+    },
+    true
 )
 generate(
     {
@@ -89,7 +93,8 @@ generate(
         'fri',
         'sat',
         'sun'
-    }
+    },
+    true
 )
 -- }}}
 
@@ -108,7 +113,8 @@ generate(
         'october',
         'november',
         'december'
-    }
+    },
+    true
 )
 -- }}}
 
