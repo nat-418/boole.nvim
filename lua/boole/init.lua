@@ -352,8 +352,8 @@ M.setup = function(options)
 
     if options == nil then return false end
 
-    if options.pair_additions ~= nil then
-        for _, val in pairs(options.pair_additions) do
+    if options.additions ~= nil then
+        for _, val in pairs(options.additions) do
             generate(val)
         end
     end
