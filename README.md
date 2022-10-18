@@ -47,12 +47,10 @@ require('boole').setup({
     increment = '<C-a>',
     decrement = '<C-x>'
   },
-  -- Key value pairs of additional replacements
-  -- increment: (key => value)
-  -- decrement: (value => key)
-  pair_additions = {
-    ['Foo'] = 'Bar',
-    ['Bar'] = 'Foo'
+  -- User defined loops
+  additions = {
+    {'Foo', 'Bar'}
+    {'tic', 'tac', 'toe'}
   },
 })
 ```
