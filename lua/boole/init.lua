@@ -347,8 +347,8 @@ M.setup = function(options)
     if options == nil then return false end
 
     if options.pair_additions ~= nil then
-        for key, val in pairs(options.pair_additions) do
-            generate_hashmaps(key, val)
+        for _, val in pairs(options.pair_additions) do
+            generate(val)
         end
     end
 
