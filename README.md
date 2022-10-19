@@ -49,7 +49,7 @@ require('boole').setup({
   },
   -- User defined loops
   additions = {
-    {'Foo', 'Bar'}
+    {'Foo', 'Bar'},
     {'tic', 'tac', 'toe'}
   },
 })
