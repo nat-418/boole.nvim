@@ -331,11 +331,11 @@ M.run = function(direction)
         and replace_map.decrement[under_cursor]
         or replace_map.increment[under_cursor]
 
-    if match ~= nil then return vim.cmd(':normal ciw' .. match) end
+    if match ~= nil then return vim.cmd('normal ciw' .. match) end
 
     -- <C-a> and <C-x> compatability
-    if direction == 'increment' then return vim.cmd(':normal!'..vim.v.count..'') end
-    if direction == 'decrement' then return vim.cmd(':normal!'..vim.v.count..'') end
+    if direction == 'increment' then return vim.cmd('normal!'..vim.v.count..'') end
+    if direction == 'decrement' then return vim.cmd('normal!'..vim.v.count..'') end
 
     vim.api.nvim_cmd()
     return false
