@@ -334,10 +334,18 @@ M.run = function(direction)
     if match ~= nil then return vim.cmd('normal ciw' .. match) end
 
     -- <C-a> and <C-x> compatability
-    if direction == 'increment' then return vim.cmd('normal!'..vim.v.count..'') end
-    if direction == 'decrement' then return vim.cmd('normal!'..vim.v.count..'') end
+    if vim.v.count ~= nil and vim.v.count > 0 then
+        if direction == 'increment' then
+            return vim.cmd('normal!' .. vim.v.count .. '')
+        end
+        if direction == 'decrement' then
+            return vim.cmd('normal!' .. vim.v.count .. '')
+        end
+    else
+        if direction == 'increment' then return vim.cmd('normal!' .. '') end
+        if direction == 'decrement' then return vim.cmd('normal!' .. '') end
+    end
 
-    vim.api.nvim_cmd()
     return false
 end
 
