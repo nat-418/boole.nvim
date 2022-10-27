@@ -1,7 +1,5 @@
-boole.nvim
-==========
-
-![A bust of George Boole](./boole.jpg)
+boole.nvim 🔛
+=============
 
 Boole is a simple Neovim plugin that extends the default increment and
 decrement functionality of CTRL-A and CTRL-X to allow for toggling
