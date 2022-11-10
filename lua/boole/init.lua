@@ -49,13 +49,12 @@ for _, letter in ipairs(letters) do
     )
 end
 
--- Booleans {{{
+-- Booleans
 generate({ 'true', 'false' }, true)
 generate({ 'yes', 'no' }, true)
 generate({ 'on', 'off' }, true)
--- }}}
 
--- Canonical hours {{{
+-- Canonical hours
 generate(
     {
         'Matins',
@@ -69,9 +68,8 @@ generate(
         'Vigil'
     }
 )
--- }}}
 
--- Days of the week {{{
+-- Days of the week
 generate(
     {
         'monday',
@@ -96,9 +94,8 @@ generate(
     },
     true
 )
--- }}}
 
--- Months of the year {{{
+-- Months of the year
 generate(
     {
         'january',
@@ -116,9 +113,8 @@ generate(
     },
     true
 )
--- }}}
 
--- Colors {{{
+-- Colors
 generate(
     {
         'red',
@@ -322,18 +318,43 @@ generate(
         'PaleGreen',
     }
 )
--- }}}
 
 M.run = function(direction)
-    local under_cursor = vim.fn.expand('<cword>')
+  local start_position = vim.api.nvim_win_get_cursor(0)
+
+  local function tryMatch(last_position)
+    local line             = vim.api.nvim_get_current_line()
+    local cword            = vim.fn.expand('<cword>')
+    local current_position = vim.api.nvim_win_get_cursor(0)
+    local last_column      = last_position[2]
+    local current_column   = current_position[2]
+
+    if cword:sub(1, 1) ~= line:sub(current_column, current_column) then
+      vim.cmd('normal! l')
+      return tryMatch(current_position)
+    end
+
+    if last_column > current_column then
+      vim.api.nvim_win_set_cursor(0, start_position)
+      return false
+    end
 
     local match = direction == 'decrement'
-        and replace_map.decrement[under_cursor]
-        or replace_map.increment[under_cursor]
+          and replace_map.decrement[cword]
+          or  replace_map.increment[cword]
 
-    if match ~= nil then return vim.cmd('normal ciw' .. match) end
+    if match then
+      vim.cmd('normal! ciw' .. match)
+      vim.cmd('normal! b')
+      return true
+    else
+      vim.cmd('normal! w')
+      return tryMatch(current_position)
+    end
+  end
 
-    -- <C-a> and <C-x> compatability
+  if not tryMatch(start_position) then
+    -- Original <C-a> and <C-x> functionality
     if vim.v.count ~= nil and vim.v.count > 0 then
         if direction == 'increment' then
             return vim.cmd('normal!' .. vim.v.count .. '')
@@ -345,8 +366,7 @@ M.run = function(direction)
         if direction == 'increment' then return vim.cmd('normal!' .. '') end
         if direction == 'decrement' then return vim.cmd('normal!' .. '') end
     end
-
-    return false
+  end
 end
 
 M.setup = function(options)
