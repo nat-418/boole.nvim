@@ -1,34 +1,35 @@
-local utils = require('boole.utils')
-
 local M = {}
 
 local replace_map = {
-    increment = {},
-    decrement = {},
+  increment = {},
+  decrement = {},
 }
 
-local generate = function(loop_list, capitalize)
-    local do_capitalize = capitalize or false
-    for i = 1, #loop_list do
-        local current = loop_list[i]
-        local next = loop_list[i + 1] or loop_list[1]
+local generate = function(loop_list, case_insensitive)
+  for i = 1, #loop_list do
+    local current = loop_list[i]
+    local next    = loop_list[i + 1] or loop_list[1]
 
-        replace_map.increment[current] = next
-        replace_map.decrement[next] = current
+    replace_map.increment[current] = next
+    replace_map.decrement[next]    = current
 
-        if do_capitalize then
-            local capitalized_current = utils.capitalize(current)
-            local capitalized_next = utils.capitalize(next)
+    if case_insensitive then
+      local capitalized_current = string.gsub(current, "^%l", string.upper)
+      local capitalized_next    = string.gsub(next,    "^%l", string.upper)
+      local all_caps_current    = string.upper(current)
+      local all_caps_next       = string.upper(next)
 
-            replace_map.increment[capitalized_current] = capitalized_next
-            replace_map.decrement[capitalized_next] = capitalized_current
-        end
+      replace_map.increment[capitalized_current] = capitalized_next
+      replace_map.decrement[capitalized_next]    = capitalized_current
+      replace_map.increment[all_caps_current]    = all_caps_next
+      replace_map.decrement[all_caps_next]       = all_caps_current
     end
+  end
 end
 
 local letters = {
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
 }
 
 for _, letter in ipairs(letters) do
@@ -50,9 +51,9 @@ for _, letter in ipairs(letters) do
 end
 
 -- Booleans
-generate({ 'true', 'false' }, true)
-generate({ 'yes', 'no' }, true)
-generate({ 'on', 'off' }, true)
+generate({'true', 'false'}, true)
+generate({'yes',  'no' },   true)
+generate({'on',   'off' },  true)
 
 -- Canonical hours
 generate(
@@ -337,6 +338,13 @@ M.run = function(direction)
     if last_column > current_column then
       vim.api.nvim_win_set_cursor(0, start_position)
       return false
+    end
+
+    if current_column == vim.fn.strlen(line) then return false end
+
+    if cword:sub(1, 1) ~= line:sub(current_column, current_column) then
+      vim.cmd('normal! l')
+      return tryMatch(current_position)
     end
 
     local match = direction == 'decrement'
