@@ -50,5 +50,11 @@ require('boole').setup({
     {'Foo', 'Bar'},
     {'tic', 'tac', 'toe'}
   },
+  allow_caps_additions = {
+    {'enable', 'disable'}
+    -- enable → disable
+    -- Enable → Disable
+    -- ENABLE → DISABLE
+  }
 })
 ```

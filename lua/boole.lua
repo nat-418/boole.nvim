@@ -5,7 +5,7 @@ local replace_map = {
   decrement = {},
 }
 
-local generate = function(loop_list, case_insensitive)
+M.generate = function(loop_list, allow_caps)
   for i = 1, #loop_list do
     local current = loop_list[i]
     local next    = loop_list[i + 1] or loop_list[1]
@@ -13,7 +13,7 @@ local generate = function(loop_list, case_insensitive)
     replace_map.increment[current] = next
     replace_map.decrement[next]    = current
 
-    if case_insensitive then
+    if allow_caps then
       local capitalized_current = string.gsub(current, "^%l", string.upper)
       local capitalized_next    = string.gsub(next,    "^%l", string.upper)
       local all_caps_current    = string.upper(current)
@@ -33,7 +33,7 @@ local letters = {
 }
 
 for _, letter in ipairs(letters) do
-    generate(
+    M.generate(
         {
             letter .. 0,
             letter .. 1,
@@ -51,12 +51,12 @@ for _, letter in ipairs(letters) do
 end
 
 -- Booleans
-generate({'true', 'false'}, true)
-generate({'yes',  'no' },   true)
-generate({'on',   'off' },  true)
+M.generate({'true', 'false'}, true)
+M.generate({'yes',  'no' },   true)
+M.generate({'on',   'off' },  true)
 
 -- Canonical hours
-generate(
+M.generate(
     {
         'Matins',
         'Lauds',
@@ -71,7 +71,7 @@ generate(
 )
 
 -- Days of the week
-generate(
+M.generate(
     {
         'monday',
         'tuesday',
@@ -83,7 +83,7 @@ generate(
     },
     true
 )
-generate(
+M.generate(
     {
         'mon',
         'tue',
@@ -97,7 +97,7 @@ generate(
 )
 
 -- Months of the year
-generate(
+M.generate(
     {
         'january',
         'february',
@@ -116,7 +116,7 @@ generate(
 )
 
 -- Colors
-generate(
+M.generate(
     {
         'red',
         'orange',
@@ -127,7 +127,7 @@ generate(
         'violet'
     })
 
-generate(
+M.generate(
     {
         'White',
         'Snow',
@@ -148,7 +148,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'Black',
         'DarkSlateGray',
@@ -162,7 +162,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'Pink',
         'LightPink',
@@ -173,7 +173,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'Indigo',
         'Purple',
@@ -196,7 +196,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'DarkRed',
         'Red',
@@ -210,7 +210,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'OrangeRed',
         'Tomato',
@@ -220,7 +220,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'DarkKhaki',
         'Gold',
@@ -236,7 +236,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'MidnightBlue',
         'Navy',
@@ -256,7 +256,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'Maroon',
         'Brown',
@@ -278,7 +278,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'Teal',
         'DarkCyan',
@@ -295,7 +295,7 @@ generate(
     }
 )
 
-generate(
+M.generate(
     {
         'DarkGreen',
         'Green',
@@ -329,11 +329,6 @@ M.run = function(direction)
     local current_position = vim.api.nvim_win_get_cursor(0)
     local last_column      = last_position[2]
     local current_column   = current_position[2]
-
-    if cword:sub(1, 1) ~= line:sub(current_column, current_column) then
-      vim.cmd('normal! l')
-      return tryMatch(current_position)
-    end
 
     if last_column > current_column then
       vim.api.nvim_win_set_cursor(0, start_position)
@@ -389,9 +384,15 @@ M.setup = function(options)
 
     if options == nil then return false end
 
+    if options.allow_caps_additions ~= nil then
+       for _, val in pairs(options.allow_caps_additions) do
+           M.generate(val, true)
+       end
+    end
+
     if options.additions ~= nil then
         for _, val in pairs(options.additions) do
-            generate(val)
+            M.generate(val)
         end
     end
 
