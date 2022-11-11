@@ -335,7 +335,9 @@ M.run = function(direction)
       return false
     end
 
-    if current_column == vim.fn.strlen(line) then return false end
+    if (current_column + 1) == vim.fn.strlen(line) then
+      return false
+    end
 
     if cword:sub(1, 1) ~= line:sub(current_column, current_column) then
       vim.cmd('normal! l')
