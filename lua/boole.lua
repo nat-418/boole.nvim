@@ -51,9 +51,10 @@ for _, letter in ipairs(letters) do
 end
 
 -- Booleans
-M.generate({'true', 'false'}, true)
-M.generate({'yes',  'no' },   true)
-M.generate({'on',   'off' },  true)
+M.generate({'true',   'false'},    true)
+M.generate({'yes',    'no' },      true)
+M.generate({'on',     'off' },     true)
+M.generate({'enable', 'disable' }, true)
 
 -- Canonical hours
 M.generate(
