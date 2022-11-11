@@ -331,11 +331,6 @@ M.run = function(direction)
     local current_position = vim.api.nvim_win_get_cursor(0)
     local current_column   = current_position[2]
 
-    -- Are we on the first character of the word? If not, go there.
-    if cword:sub(1, 1) ~= line:sub(current_column + 1, current_column + 1) then
-      vim.cmd('normal! wb')
-    end
-
     -- C-a and C-x already handle numbers, no need to try and
     -- match them to out added values.
     if tonumber(cword) ~= nil then
@@ -355,6 +350,14 @@ M.run = function(direction)
           or  replace_map.increment[cword]
 
     if match then
+      -- Are we at the end of the line? If so, jump back.
+      if (current_column + 1) == vim.fn.strlen(line) then
+        vim.cmd('normal! b')
+      -- Are we on the first character of the word? If not, move there.
+      elseif cword:sub(1, 1) ~= line:sub(current_column + 1, current_column + 1) then
+        vim.cmd('normal! l')
+        tryMatch(current_position)
+      end
       -- Replace the word and put the cursor on the beginning of replacement.
       vim.cmd('normal! ciw' .. match)
       vim.cmd('normal! b')
@@ -365,7 +368,6 @@ M.run = function(direction)
         vim.api.nvim_win_set_cursor(0, start_position)
         return false
       end
-
       -- Try the next word to see if it matches.
       vim.cmd('normal! w')
       return tryMatch(current_position)
