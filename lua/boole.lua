@@ -323,44 +323,56 @@ M.generate(
 M.run = function(direction)
   local start_position = vim.api.nvim_win_get_cursor(0)
 
+  -- Tail-recursive function to match and replace.
   local function tryMatch(last_position)
     local line             = vim.api.nvim_get_current_line()
     local cword            = vim.fn.expand('<cword>')
     local current_position = vim.api.nvim_win_get_cursor(0)
-    local last_column      = last_position[2]
     local current_column   = current_position[2]
 
-    if last_column > current_column then
+    -- C-a and C-x already handle numbers, no need to try and
+    -- match them to out added values.
+    if tonumber(cword) ~= nil then
+      return false
+    end
+
+    -- Limit matches to the original line.
+    if last_position[1] < current_position[1] then
       vim.api.nvim_win_set_cursor(0, start_position)
       return false
     end
 
-    if (current_column + 1) == vim.fn.strlen(line) then
-      vim.api.nvim_win_set_cursor(0, start_position)
-      return false
-    end
-
-    if cword:sub(1, 1) ~= line:sub(current_column, current_column) then
-      vim.cmd('normal! l')
-      return tryMatch(current_position)
-    end
-
+    -- Do we have a match?
     local match = direction == 'decrement'
           and replace_map.decrement[cword]
           or  replace_map.increment[cword]
 
     if match then
+      -- Are we on the first character of the match? If not, move there.
+      if cword:sub(1, 1) ~= line:sub(current_column + 1, current_column + 1) then
+        vim.cmd('normal! wb')
+        return tryMatch(current_position)
+      end
+
+      -- Replace the word and put the cursor on the beginning of replacement.
       vim.cmd('normal! ciw' .. match)
-      vim.cmd('normal! b')
+      vim.cmd('normal! wb')
       return true
     else
+      -- Are we at the end of the line? If so, give up.
+      if (current_column + 1) == vim.fn.strlen(line) then
+        vim.api.nvim_win_set_cursor(0, start_position)
+        return false
+      end
+
+      -- Try the next word to see if it matches.
       vim.cmd('normal! w')
       return tryMatch(current_position)
     end
   end
 
+  -- Fallback to original <C-a> and <C-x> functions for numbers.
   if not tryMatch(start_position) then
-    -- Original <C-a> and <C-x> functionality
     if vim.v.count ~= nil and vim.v.count > 0 then
         if direction == 'increment' then
             return vim.cmd('normal!' .. vim.v.count .. '')
