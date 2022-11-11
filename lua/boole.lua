@@ -336,6 +336,7 @@ M.run = function(direction)
     end
 
     if (current_column + 1) == vim.fn.strlen(line) then
+      vim.api.nvim_win_set_cursor(0, start_position)
       return false
     end
 
