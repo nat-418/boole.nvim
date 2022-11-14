@@ -51,10 +51,11 @@ for _, letter in ipairs(letters) do
 end
 
 -- Booleans
-M.generate({'true',   'false'},    true)
-M.generate({'yes',    'no' },      true)
-M.generate({'on',     'off' },     true)
-M.generate({'enable', 'disable' }, true)
+M.generate({'true',    'false'},    true)
+M.generate({'yes',     'no'},       true)
+M.generate({'on',      'off'},      true)
+M.generate({'enable',  'disable'},  true)
+M.generate({'enabled', 'disabled'}, true)
 
 -- Canonical hours
 M.generate(
@@ -341,7 +342,7 @@ M.run = function(direction)
     if last_position[1] < current_position[1] then
       vim.api.nvim_win_set_cursor(0, start_position)
       vim.cmd('normal! wb')
-      return tryMatch(current_position)
+      return false
     end
 
     -- Do we have a match?
@@ -352,11 +353,11 @@ M.run = function(direction)
     if match then
       -- Are we at the end of the line? If so, jump back.
       if (current_column + 1) == vim.fn.strlen(line) then
-        vim.cmd('normal! b')
+        return vim.cmd('normal! b')
       -- Are we on the first character of the word? If not, move there.
       elseif cword:sub(1, 1) ~= line:sub(current_column + 1, current_column + 1) then
         vim.cmd('normal! l')
-        tryMatch(current_position)
+        return tryMatch(current_position)
       end
       -- Replace the word and put the cursor on the beginning of replacement.
       vim.cmd('normal! ciw' .. match)
