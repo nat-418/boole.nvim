@@ -345,6 +345,11 @@ M.run = function(direction)
       return false
     end
 
+    -- If current is space go next word
+    if(line:sub(current_column + 1, current_column + 1)==" ")then
+        vim.cmd('normal! w')
+        return tryMatch(current_position)
+    end
     -- Do we have a match?
     local match = direction == 'decrement'
           and replace_map.decrement[cword]
@@ -352,11 +357,15 @@ M.run = function(direction)
 
     if match then
       -- Are we at the end of the line? If so, jump back.
+      -- Jump back with next recursion.
       if (current_column + 1) == vim.fn.strlen(line) then
-        return vim.cmd('normal! b')
+        --return vim.cmd('normal! b')
+        vim.cmd('normal! b')
+        return tryMatch(current_position)
       -- Are we on the first character of the word? If not, move there.
       elseif cword:sub(1, 1) ~= line:sub(current_column + 1, current_column + 1) then
-        vim.cmd('normal! l')
+        --vim.cmd('normal! l')
+        vim.cmd('normal! b')
         return tryMatch(current_position)
       end
       -- Replace the word and put the cursor on the beginning of replacement.
