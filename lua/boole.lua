@@ -364,8 +364,11 @@ M.run = function(direction)
         return tryMatch(current_position)
       -- Are we on the first character of the word? If not, move there.
       elseif cword:sub(1, 1) ~= line:sub(current_column + 1, current_column + 1) then
-        --vim.cmd('normal! l')
-        vim.cmd('normal! b')
+        if(start_position[2]>0) then
+            vim.cmd('normal! b')
+        else
+            vim.cmd('normal! l')
+        end
         return tryMatch(current_position)
       end
       -- Replace the word and put the cursor on the beginning of replacement.
