@@ -405,7 +405,7 @@ M.run = function(direction)
 
     if match then
       -- Are we on the first character of the word? If not, move there.
-      -- if not first char compare current word is match or not
+      -- If not first char compare current word is match or not
       if cword:sub(1, 1) ~= line:sub(current_column + 1, current_column + 1) then
         if check_postion_word(line,current_column, cword) then
           vim.cmd('normal! b')
@@ -414,7 +414,7 @@ M.run = function(direction)
         end
         return tryMatch(current_position)
       -- Are we at the end of the line? If so, jump back.
-      -- even in last word we will check match or not so move this to back
+      -- Even in last word we will check match or not so move this to back
       elseif (current_column + 1) == vim.fn.strlen(line) then
         vim.api.nvim_win_set_cursor(0, start_position)
         return false
@@ -430,6 +430,7 @@ M.run = function(direction)
               return false
           end
       end
+      -- Replace the word and put the cursor on the beginning of replacement.
       ori_v_count = 0
       vim.cmd('normal! ciw' .. match)
       vim.cmd('normal! b')
