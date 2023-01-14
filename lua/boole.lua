@@ -385,6 +385,10 @@ M.run = function(direction)
 
     -- we only need check char in alpha and number
     if string.find(line:sub(current_column+1, current_column+1),"[^][a-zA-Z0-9]") then
+      if (current_column + 1) == vim.fn.strlen(line) then
+        vim.api.nvim_win_set_cursor(0, start_position)
+        return false
+      end
       vim.cmd('normal! w')
       return tryMatch(current_position)
     end
