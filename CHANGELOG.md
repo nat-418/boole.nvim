@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/nat-418/boole.nvim/compare/v3.0.0...v3.0.1) (2023-01-14)
+
+
+### Bug Fixes
+
+* misc bugfixes ([16836c4](https://github.com/nat-418/boole.nvim/commit/16836c444252295cc984fe831fc6ef4ec186d89b))
+
 ## [3.0.0](https://github.com/nat-418/boole.nvim/compare/v2.1.2...v3.0.0) (2022-11-14)
 
 
