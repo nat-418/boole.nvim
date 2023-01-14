@@ -21,14 +21,8 @@ configuration section below for an example.
 Installation
 ------------
 
-Using [Packer](https://github.com/wbthomason/packer.nvim):
-```lua
-use({
-  'https://github.com/nat-418/boole.nvim',
-  config = function()
-    require('boole').setup()
-  end
-})
+```sh
+$ git clone --depth 1 https://github.com/nat-418/boole.nvim ~/.local/share/nvim/site/pack/boole/start/boole.nvim
 ```
 
 Configuration
