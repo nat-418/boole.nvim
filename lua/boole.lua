@@ -357,6 +357,11 @@ function number_exist_in_word(line,current_column)
       if string.match(word_after_cursor,"%d") then
           return true
       end
+  else
+      local last_string = line:sub(current_column+1,string.len(line))
+      if string.match(last_string,"%d") then
+          return true
+      end
   end
   return false
 end
