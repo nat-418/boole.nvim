@@ -436,7 +436,7 @@ M.run = function(direction)
       end
       -- Replace the word and put the cursor on the beginning of replacement.
       ori_v_count = 0
-      vim.cmd('normal! ciw' .. match)
+      vim.cmd('normal! "_ciw' .. match)
       vim.cmd('normal! b')
       return true
     else
