@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/nat-418/boole.nvim/compare/v3.0.1...v3.1.0) (2023-07-08)
+
+
+### Features
+
+* black hole register ([#27](https://github.com/nat-418/boole.nvim/issues/27)) ([b889552](https://github.com/nat-418/boole.nvim/commit/b889552dd9c7bf48e607533db7d3682c1cf58000))
+
 ## [3.0.1](https://github.com/nat-418/boole.nvim/compare/v3.0.0...v3.0.1) (2023-01-14)
 
 
